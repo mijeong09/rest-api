@@ -35,4 +35,11 @@ public class TodoServiceImpl implements TodoService{
                 .map(TodoResponse::from)
                 .toList();
     }
+
+    @Override
+    public TodoResponse findById(Long id) {
+        Todo todo = todoRepository.findById(id)
+                .orElseThrow();
+        return TodoResponse.from(todo);
+    }
 }

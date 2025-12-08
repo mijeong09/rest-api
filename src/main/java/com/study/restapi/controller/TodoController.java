@@ -21,7 +21,6 @@ public class TodoController {
     @PostMapping
     public ResponseEntity<TodoResponse> create(
             @Valid @RequestBody TodoCreateRequest request
-
     ) {
         TodoResponse response = todoService.create(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -32,4 +31,13 @@ public class TodoController {
         List<TodoResponse> responses = todoService.findAll();
         return ResponseEntity.ok(responses);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TodoResponse> findById(
+            @PathVariable Long id
+    ) {
+        TodoResponse response = todoService.findById(id);
+        return ResponseEntity.ok(response);
+    }
+
 }
