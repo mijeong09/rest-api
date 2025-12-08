@@ -14,7 +14,7 @@ public class ApiResponse<T> {
     private ErrorDetail error;
 
     // 성공 응답 (데이터 O)
-    public static <T> ApiResponse<T> seccess(T data) {
+    public static <T> ApiResponse<T> success(T data) {
         return new ApiResponse<>(true, data, null);
     }
     // 성공 응답 (데이터 X - Delete)
