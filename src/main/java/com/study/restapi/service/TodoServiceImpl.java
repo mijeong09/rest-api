@@ -41,8 +41,16 @@ public class TodoServiceImpl implements TodoService{
     public TodoResponse findById(Long id) {
         Todo todo = todoRepository.findById(id)
                 .orElseThrow();
-
         return TodoResponse.from(todo);
+    }
+
+    @Override
+    @Transactional
+    public void delete(Long id) {
+        if (!todoRepository.existsById(id)) {
+            throw new RuntimeException();
+        }
+        todoRepository.deleteById(id);
     }
 
     @Override
