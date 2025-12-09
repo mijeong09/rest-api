@@ -4,11 +4,13 @@ import com.study.restapi.dto.request.TodoCreateRequest;
 import com.study.restapi.dto.request.TodoUpdateRequest;
 import com.study.restapi.dto.response.ApiResponse;
 import com.study.restapi.dto.response.TodoResponse;
+import com.study.restapi.security.CustomUserDetails;
 import com.study.restapi.service.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,9 +25,10 @@ public class TodoController {
     // 일관성있게 구현하기 위해서 ResponseEntity 객체로 반환하는 것
     @PostMapping
     public ResponseEntity<ApiResponse<TodoResponse>> create(
-            @Valid @RequestBody TodoCreateRequest request
+            @Valid @RequestBody TodoCreateRequest request,
+            @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-        TodoResponse response = todoService.create(request);
+        TodoResponse response = todoService.create(request, userDetails.getUsername());
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success(response));
     }
