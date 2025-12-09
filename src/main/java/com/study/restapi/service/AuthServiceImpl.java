@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService{
 
     @Override
     public TokenResponse login(LoginRequest request) {
-        User user = userRepository.finaByUsername(request.getUsername())
+        User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         if(!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
